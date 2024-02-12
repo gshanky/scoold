@@ -156,12 +156,14 @@ public class ScooldServer extends SpringBootServletInitializer {
 	@Bean
 	public ParaClient paraClientBean() {
 		tryAutoInitParaApp();
+
+		//List admins
+		logger.info("Admins {}", CONF.admins());
 		logger.info("Scoold server is listening on {}", CONF.serverUrl() + CONF.serverContextPath());
 		String accessKey = CONF.paraAccessKey();
 		ParaClient pc = new ParaClient(accessKey, CONF.paraSecretKey());
 		ScooldUtils.setParaEndpointAndApiPath(pc);
 		pc.setChunkSize(CONF.batchRequestSize()); // unlimited batch size
-
 		printRootAppConnectionNotice();
 		printGoogleMigrationNotice();
 		printFacebookMigrationNotice();

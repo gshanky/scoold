@@ -59,6 +59,12 @@
 								<input type="text" name="leaveblank" value="">
 								<input type="hidden" name="timestamp" value="$utils.timestamp()">
 							</div>
+							<div class="g-recaptcha" data-sitekey="6Ldqh28pAAAAAOVdLDLvYELqgjNHpQ7zESgLsLGc"></div>
+						  	<br/>
+							<div class="mtl">
+								<button type="submit" class="btn">#if($resend)$!lang.get('send')#else$!lang.get('signup.title')#end</button>
+							</div>
+#*
 							#if($captchakey.isBlank())
 								<button type="submit" class="btn">
 							#else
@@ -66,8 +72,10 @@
 							#end
 									#if($resend)$!lang.get('send')#else$!lang.get('signup.title')#end
 								</button>
+*#
 						</form>
 					#end
+
 				</div>
 			</div>
 		</div>
@@ -110,6 +118,14 @@
 							</div>
 						#end
 						#if($nosmtp)#set($nosend = "disabled='disabled'")#else#set($nosend = "")#end
+						<div class="g-recaptcha" data-sitekey="6Ldqh28pAAAAAOVdLDLvYELqgjNHpQ7zESgLsLGc"></div>
+						<br/>
+						<div class="mtl">
+							<button type="submit" class="btn">#if($token)$!lang.get('change')#else$!lang.get('send')#end</button>
+						</div>
+
+#*
+	// Commented to disable captch-v3
 						#if($captchakey.isBlank())
 							<button type="submit" class="btn" $nosend>
 						#else
@@ -117,6 +133,7 @@
 						#end
 							#if($token)$!lang.get('change')#else$!lang.get('send')#end
 							</button>
+*#
 					</form>
 					#end
 				</div>
@@ -165,6 +182,8 @@
 									<label for="passw">$!lang.get('password')</label>
 									<input id="passw" type="password" value="" minlength="6" name="password" required>
 								</div>
+								<div class="g-recaptcha" data-sitekey="6Ldqh28pAAAAAOVdLDLvYELqgjNHpQ7zESgLsLGc"></div>
+								<br/>
 								<input type="hidden" name="provider" value="password">
 								<input type="hidden" name="access_token" value="password">
 								<div class="mtl">
@@ -190,6 +209,8 @@
 									<label for="password">$!lang.get('password')</label>
 									<input id="password" name="password" type="password" value="" required>
 								</div>
+								<div class="g-recaptcha" data-sitekey="6Ldqh28pAAAAAOVdLDLvYELqgjNHpQ7zESgLsLGc"></div>
+								<br/>
 								<input type="hidden" name="provider" value="ldap">
 								<input type="hidden" name="access_token" value="ldap">
 								<div class="mtl">

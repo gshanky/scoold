@@ -452,6 +452,33 @@ public class ScooldConfig extends Config {
 	public String emailsDefaultSignatureText(String defaultText) {
 		return getConfigParam("emails.default_signature", defaultText);
 	}
+	@Documented(position = 391,
+		identifier = "signup.moderator.emails.welcome_text1",
+		value = "A new user has registered -...",
+		category = "Emails",
+		description = "Allows for changing the default text (first paragraph) in the moderator notification email message.")
+	public String moderatorEmailsWelcomeText1(Map<String, String> lang) {
+		return getConfigParam("signup.moderator.emails.welcome_text1", lang.get("signup.moderator.body1") + "<br><br>");
+	}
+
+	@Documented(position = 392,
+		identifier = "signup.moderator.emails.welcome.approve",
+		value = "Approve {0} here",
+		category = "Emails",
+		description = "Allows for changing the default text (second paragraph) in the welcome email message.")
+	public String moderatorEmailsWelcomeText2(Map<String, String> lang) {
+		return getConfigParam("signup.moderator.emails.welcome.approve", lang.get("signup.moderator.approve") + "<br><br>");
+	}
+
+	@Documented(position = 393,
+		identifier = "confirmation.body",
+		value = "Congratulations! Your registration has been approved ..",
+		category = "Emails",
+		description = "Allows for changing the default text (second paragraph) in the welcome email message.")
+	public String moderatorConfirmationEmailBody(Map<String, String> lang) {
+		return getConfigParam("signup.moderator.emails.confirmation.body", lang.get("confirmation.body") + "<br><br>");
+	}
+
 
 	/* **************************************************************************************************************
 	 * Security                                                                                            Security *
@@ -3372,6 +3399,23 @@ public class ScooldConfig extends Config {
 		return getConfigBoolean("notifications_as_reports_enabled", false);
 	}
 
+	@Documented(position = 3100,
+		identifier = "moderator_email",
+		category = "Miscellaneous",
+		description = "User Moderator Email to send email to moderators")
+	public String moderatorEmail() {
+		return getConfigParam("moderator_email", "");
+	}
+
+	@Documented(position = 3200,
+		identifier = "moderator_approval_required",
+		category = "Miscellaneous",
+		description = "User Moderator Email to send email to moderators")
+	public boolean isModeratorApproval() {
+		return getConfigBoolean("moderator_approval_required", false);
+	}
+
+
 	/* **********************************************************************************************************/
 
 	public boolean inDevelopment() {
@@ -3497,6 +3541,11 @@ public class ScooldConfig extends Config {
 		return settings;
 	}
 
+	public boolean getBooleanValue (String key) {
+
+		return getConfigBoolean(key, false);
+	}
+
 	String getDefaultContentSecurityPolicy() {
 		return "default-src 'self'; "
 				+ "base-uri 'self'; "
@@ -3513,7 +3562,8 @@ public class ScooldConfig extends Config {
 				+ "img-src 'self' https: data:; "
 				+ "object-src 'none'; "
 				+ "report-uri /reports/cspv; "
-				+ "script-src 'unsafe-inline' https: 'nonce-{{nonce}}' 'strict-dynamic';"; // CSP2 backward compatibility
+				+ "script-src 'unsafe-inline' " + cspFrameSources() + " https: 'strict-dynamic';"
+				+ "script-src-elem 'unsafe-inline' https://tpc.googlesyndication.com/ https://forum.mec.community/ https://www.gstatic.com/ https://googleads.g.doubleclick.net/ https://pagead2.googlesyndication.com  https://pagead2.googlesyndication.com/pagead/js/ https://www.google.com/recaptcha/"; // CSP2 backward compatibility
 	}
 
 }

@@ -143,6 +143,10 @@ public class SigninController {
 			if (verified) {
 				model.addAttribute("verified", verified);
 				model.addAttribute("verifiedEmail", u.getEmail());
+
+				//send confirmation email to user
+				utils.sendConfirmationEmail(u, true, req);
+
 			} else {
 				return "redirect:" + SIGNINLINK;
 			}
@@ -153,6 +157,7 @@ public class SigninController {
 	@PostMapping("/signin/register")
 	public String signup(@RequestParam String name, @RequestParam String email, @RequestParam String passw,
 			HttpServletRequest req, HttpServletResponse res, Model model) {
+
 		if (!CONF.passwordAuthEnabled()) {
 			return "redirect:" + SIGNINLINK;
 		}
@@ -361,6 +366,15 @@ public class SigninController {
 			u.setName(name);
 			u.setEmail(email);
 			u.setIdentifier(email);
+
+			//send email to moderators so that this could be approved by moderators
+			if (CONF.isModeratorApproval()) {
+				String moderatorEmail = CONF.moderatorEmail();
+
+				//Send approval email to moderator for now
+				utils.sendModeratorEmail(u, moderatorEmail, true, req);
+			}
+
 			utils.sendWelcomeEmail(u, true, req);
 		}
 	}
