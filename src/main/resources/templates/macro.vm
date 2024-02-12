@@ -497,7 +497,7 @@
 
 					#if(!$compactUsersViewEnabled)<div>#end
 
-						#if ($showFriend.groups == "admins")
+						#if ($scooldUtils.isAdmin($showFriend))
 						<a href="$peoplelink/tag/groups:admins"><small class="chip badgebox"><i class="fa fa-asterisk orange-text"></i> $!lang.get('admin')</small></a>
 						#end
 						#if ($showFriend.groups == "mods")
@@ -756,7 +756,7 @@
 	#if($showpost.isReply())<hr>#end
 	<div id="post-$!showpost.id" class="viewbox mbm">
 		<div class="postbody pvs">
-			#set($_bodyHtml = $utils.markdownToHtml($!showpost.body, $!htmlInMarkdownEnabled))
+			#set($_bodyHtml = $scooldUtils.fixHtml($utils.markdownToHtml($!showpost.body, $!htmlInMarkdownEnabled)));
 			$!{_bodyHtml}
 		</div>
 

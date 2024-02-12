@@ -1564,7 +1564,9 @@ $(function () {
 		});
 	}
 
-	if (window.location.pathname.indexOf(CONTEXT_PATH + '/signin/') >= 0) {
+	if (window.location.pathname.indexOf(CONTEXT_PATH + '/signin') >= 0) {
+		//set-captcha
+		$('#g-recaptcha-response').prop('required','true');
 		var passwordInput = $('#passw, #newpassword');
 		var scoreMessage = $('#pass-meter-message');
 		var messagesList = ['Too simple', 'Weak', 'Good', 'Strong', 'Very strong'];

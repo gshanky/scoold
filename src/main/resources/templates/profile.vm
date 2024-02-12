@@ -79,7 +79,7 @@
 				#set($hideBadgePanel = "hide")
 			#end
 			<div class="card-action card-website center-align truncate ${hideBadgePanel}">
-				#if ($showUser.groups == "admins")
+				#if ($scooldUtils.isAdmin($showUser))
 				<span class="chip badgebox black-text">
 					<i class="fa fa-asterisk orange-text"></i> $!lang.get('admin')
 				</span>
